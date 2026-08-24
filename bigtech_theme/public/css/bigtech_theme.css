@@ -455,6 +455,7 @@ body { background-color: var(--bt-body-bg) !important; }
 
 /* FORM TABS */
 .nav.form-tabs .nav-item + .nav-item { border-left: 1px solid var(--border-color, #dee2e6) !important; }
+.nav.form-tabs .nav-link.active { border-bottom: 3px solid var(--bt-btn-primary-bg, #171717) !important; }
 
 /* SIDEBAR - Frappe default */
 .body-sidebar { background-color: var(--bt-sidebar-bg) !important; color: var(--bt-sidebar-color) !important; }
