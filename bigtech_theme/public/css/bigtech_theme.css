@@ -597,7 +597,7 @@ label.control-label { color: var(--bt-input-label-color) !important; }
 
 .login-content.page-card, .signup-content.page-card {
     background-color: var(--bt-login-box-bg, #fff) !important;
-    border: 2px solid var(--bt-login-box-bg, #fff) !important;
+    border: 2px solid var(--bt-card-border-color, #c7c7c7) !important;
     width: var(--bt-login-box-width, 400px) !important;
     padding: var(--bt-login-box-padding, 45px 10px) !important;
     margin: 0 !important;
