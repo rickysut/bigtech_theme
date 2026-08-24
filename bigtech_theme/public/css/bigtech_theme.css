@@ -482,7 +482,12 @@ body { background-color: var(--bt-body-bg) !important; }
 }
 #kt-sidebar .kt-sidebar-item.active > .kt-sidebar-link::before { background: var(--bt-primary) !important; }
 #kt-sidebar .kt-sidebar-badge { background: var(--bt-primary) !important; }
-#kt-sidebar .kt-sidebar-icon, #kt-sidebar .kt-sidebar-icon i { color: var(--bt-sidebar-color) !important; }
+#kt-sidebar .kt-sidebar-icon, #kt-sidebar .kt-sidebar-icon i,
+#kt-sidebar .kt-sidebar-icon svg, #kt-sidebar .kt-sidebar-icon svg use {
+    color: var(--bt-sidebar-color) !important;
+    fill: var(--bt-sidebar-color) !important;
+    stroke: var(--bt-sidebar-color) !important;
+}
 #kt-sidebar .kt-sidebar-chevron { color: var(--bt-sidebar-color) !important; }
 #kt-sidebar .kt-sidebar-user-name { color: var(--bt-sidebar-color) !important; }
 #kt-sidebar .kt-sidebar-footer { border-top-color: var(--bt-sidebar-color) !important; }
