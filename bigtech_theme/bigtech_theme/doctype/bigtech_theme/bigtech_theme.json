@@ -50,6 +50,7 @@
   "body_section",
   "body_bg_color",
   "card_bg_color",
+  "card_bg_border_color",
   "column_break_body",
   "text_color",
   "heading_color",
@@ -573,13 +574,18 @@
    "fieldname": "footer_powered_by",
    "fieldtype": "Data",
    "label": "Footer \"Powered By\""
+  },
+  {
+   "fieldname": "card_bg_border_color",
+   "fieldtype": "Color",
+   "label": "Card Border Color"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2026-08-24 19:53:07.286036",
+ "modified": "2026-08-24 20:20:04.901813",
  "modified_by": "Administrator",
  "module": "Bigtech Theme",
  "name": "Bigtech Theme",

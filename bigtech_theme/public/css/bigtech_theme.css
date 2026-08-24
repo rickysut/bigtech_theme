@@ -435,7 +435,12 @@ button.navbar-toggler { border-color: var(--bt-navbar-color) !important; }
     stroke: var(--bt-navbar-color) !important; fill: var(--bt-navbar-color) !important;
 }
 .input-group.search-bar .form-control, .input-group.search-bar input,
-.awesomplete input, .navbar .search-bar input { color: var(--bt-navbar-color) !important; }
+.awesomplete input, .navbar .search-bar input,
+#navbar-search {
+    color: var(--bt-navbar-color) !important;
+    border: 1px solid var(--bt-input-border, #888) !important;
+    background-color: var(--bt-input-bg) !important;
+}
 .navbar .search-bar .icon { color: var(--bt-navbar-color) !important; }
 
 /* BODY & CARDS */
