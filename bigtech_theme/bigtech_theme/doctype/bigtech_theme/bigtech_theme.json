@@ -50,7 +50,7 @@
   "body_section",
   "body_bg_color",
   "card_bg_color",
-  "card_bg_border_color",
+  "card_bg_border",
   "column_break_body",
   "text_color",
   "heading_color",
@@ -70,6 +70,7 @@
   "column_break_th",
   "table_body_bg_color",
   "table_body_text_color",
+  "table_border",
   "table_options_section",
   "table_hide_like_comment_section",
   "disable_card_view_on_mobile_view",
@@ -97,7 +98,8 @@
   "footer_border_color",
   "column_break_footer",
   "sticky_footer",
-  "footer_powered_by"
+  "footer_powered_by",
+  "card_bg_border_color"
  ],
  "fields": [
   {
@@ -341,6 +343,11 @@
    "label": "Card Background Color"
   },
   {
+   "fieldname": "card_bg_border_color",
+   "fieldtype": "Color",
+   "label": "Card Border Color"
+  },
+  {
    "fieldname": "column_break_body",
    "fieldtype": "Column Break"
   },
@@ -579,13 +586,23 @@
    "fieldname": "card_bg_border_color",
    "fieldtype": "Color",
    "label": "Card Border Color"
+  },
+  {
+   "fieldname": "card_bg_border",
+   "fieldtype": "Color",
+   "label": "Card Border Color"
+  },
+  {
+   "fieldname": "table_border",
+   "fieldtype": "Color",
+   "label": "Table Border"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2026-08-24 20:20:04.901813",
+ "modified": "2026-08-24 20:34:15.104868",
  "modified_by": "Administrator",
  "module": "Bigtech Theme",
  "name": "Bigtech Theme",

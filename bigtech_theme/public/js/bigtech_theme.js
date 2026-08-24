@@ -324,7 +324,7 @@ class BigtechDeskTheme {
 		this.carouselIndex = 0;
 		this.cssVars = [
 			"--bt-navbar-bg", "--bt-navbar-color",
-			"--bt-body-bg", "--bt-card-bg", "--bt-text-color",
+			"--bt-body-bg", "--bt-card-bg", "--bt-card-border-color", "--bt-text-color",
 			"--bt-heading-color", "--bt-primary",
 			"--bt-sidebar-bg", "--bt-sidebar-color",
 			"--bt-sidebar-active-bg", "--bt-sidebar-active-color",
@@ -335,7 +335,7 @@ class BigtechDeskTheme {
 			"--bt-btn-secondary-hover-bg", "--bt-btn-secondary-hover-color",
 			"--bt-btn-secondary-border",
 			"--bt-table-head-bg", "--bt-table-head-color",
-			"--bt-table-body-bg", "--bt-table-body-color",
+			"--bt-table-body-bg", "--bt-table-body-color", "--bt-table-border",
 			"--bt-widget-bg", "--bt-widget-color",
 			"--bt-number-card-bg", "--bt-number-card-border", "--bt-number-card-color",
 			"--bt-input-bg", "--bt-input-border", "--bt-input-color", "--bt-input-label-color",
@@ -479,6 +479,7 @@ class BigtechDeskTheme {
 		// Body
 		set("--bt-body-bg", t.body_bg_color);
 		set("--bt-card-bg", t.card_bg_color);
+		set("--bt-card-border-color", t.card_bg_border);
 		set("--bt-text-color", t.text_color);
 		set("--bt-heading-color", t.heading_color);
 		set("--bt-primary", t.primary_color);
@@ -508,6 +509,7 @@ class BigtechDeskTheme {
 		set("--bt-table-head-color", t.table_head_text_color);
 		set("--bt-table-body-bg", t.table_body_bg_color);
 		set("--bt-table-body-color", t.table_body_text_color);
+		set("--bt-table-border", t.table_border);
 
 		// Widgets
 		set("--bt-widget-bg", t.widget_bg_color);

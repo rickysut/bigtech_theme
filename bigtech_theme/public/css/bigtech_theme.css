@@ -449,6 +449,7 @@ body { background-color: var(--bt-body-bg) !important; }
 .layout-main-section, .form-layout, .layout-main, .form-page,
 .nav.form-tabs, .row.form-section.card-section.visible-section {
     background-color: var(--bt-card-bg) !important; color: var(--bt-text-color) !important;
+    border-color: var(--bt-card-border-color, inherit) !important;
 }
 .page-card-head h4 { color: var(--bt-heading-color) !important; }
 
@@ -497,6 +498,8 @@ body { background-color: var(--bt-body-bg) !important; }
 }
 
 /* TABLES */
+.list-view .list-table { border: 1px solid var(--bt-table-border) !important; }
+.frappe-list .list-table { border: 1px solid var(--bt-table-border) !important; }
 .level.list-row-head.text-muted { background-color: var(--bt-table-head-bg) !important; }
 .level-left.list-header-subject, span.level-item, div.level-right { color: var(--bt-table-head-color) !important; }
 .level.list-row, .level-item.bold.ellipsis a, .filterable.ellipsis {
@@ -510,8 +513,27 @@ body { background-color: var(--bt-body-bg) !important; }
 .widget-head, .widget-label, .widget-title, .widget-body, .widget-content div.number { color: var(--bt-widget-color) !important; }
 
 /* INPUTS */
-.form-control { background-color: var(--bt-input-bg) !important; color: var(--bt-input-color) !important; border-color: var(--bt-input-border) !important; }
+input.form-control, textarea.form-control, select.form-control,
+.frappe-control input, .frappe-control textarea, .frappe-control select,
+input[type="text"], input[type="number"], input[type="date"],
+input[type="datetime-local"], input[type="time"], input[type="email"],
+input[type="password"], input[type="search"], input[type="url"],
+input.input-with-feedback, .input-with-feedback > input,
+.awesomplete input, .link-field input, .sidebar-search input,
+input.form-control:disabled, input.form-control[readonly],
+textarea.form-control:disabled, textarea.form-control[readonly],
+select.form-control:disabled, select.form-control[readonly],
+input[disabled], textarea[disabled], select[disabled] {
+    border: 1px solid var(--bt-input-border, #c7c7c7) !important;
+    background-color: var(--bt-input-bg) !important;
+    color: var(--bt-input-color) !important;
+}
 label.control-label { color: var(--bt-input-label-color) !important; }
+.like-disabled-input {
+    border: 1px solid var(--bt-input-border, #c7c7c7) !important;
+    background-color: var(--bt-input-bg) !important;
+}
+.btn-attach { border-color: var(--bt-input-border) !important; }
 
 /* TOGGLES */
 .d-lg-block, .d-sm-block { display: var(--bt-hide-help, block) !important; }
