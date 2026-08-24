@@ -320,6 +320,8 @@ class BigtechDeskTheme {
 		this.themeData = null;
 		this.cacheKey = "bigtech_desk_theme_cache";
 		this.cacheTTL = 30 * 24 * 60 * 60 * 1000;
+		this.carouselTimer = null;
+		this.carouselIndex = 0;
 		this.cssVars = [
 			"--bt-navbar-bg", "--bt-navbar-color",
 			"--bt-body-bg", "--bt-card-bg", "--bt-text-color",
@@ -328,14 +330,27 @@ class BigtechDeskTheme {
 			"--bt-sidebar-active-bg", "--bt-sidebar-active-color",
 			"--bt-btn-primary-bg", "--bt-btn-primary-color",
 			"--bt-btn-primary-hover-bg", "--bt-btn-primary-hover-color",
+			"--bt-btn-primary-border",
 			"--bt-btn-secondary-bg", "--bt-btn-secondary-color",
 			"--bt-btn-secondary-hover-bg", "--bt-btn-secondary-hover-color",
+			"--bt-btn-secondary-border",
 			"--bt-table-head-bg", "--bt-table-head-color",
 			"--bt-table-body-bg", "--bt-table-body-color",
 			"--bt-widget-bg", "--bt-widget-color",
 			"--bt-number-card-bg", "--bt-number-card-border", "--bt-number-card-color",
 			"--bt-input-bg", "--bt-input-border", "--bt-input-color", "--bt-input-label-color",
 			"--bt-hide-help", "--bt-hide-app-switcher",
+			"--bt-hide-like-comment",
+			"--bt-login-btn-bg", "--bt-login-btn-color",
+			"--bt-login-btn-hover-bg", "--bt-login-btn-hover-color",
+			"--bt-login-bg-color", "--bt-login-bg-image",
+			"--bt-login-box-bg", "--bt-login-box-position", "--bt-login-box-top",
+			"--bt-login-box-border-radius", "--bt-login-box-padding",
+			"--bt-login-title-display", "--bt-login-title-content", "--bt-login-title-color",
+			"--bt-carousel-fade-opacity", "--bt-carousel-bg-image",
+			"--bt-footer-bg", "--bt-footer-color", "--bt-footer-border",
+			"--bt-footer-display", "--bt-footer-powered-color",
+			"--bt-footer-link-color", "--bt-footer-link-hover-color",
 		];
 		this.init();
 	}
@@ -358,6 +373,8 @@ class BigtechDeskTheme {
 		if (cached && cached.data) {
 			this.themeData = cached.data;
 			this.applyTheme();
+		} else {
+			this.showLoginBox();
 		}
 	}
 
@@ -426,11 +443,15 @@ class BigtechDeskTheme {
 			return;
 		}
 		this.setCSSVariables();
+		this.applyLoginPage();
+		this.applyFooter();
 	}
 
 	clearCSSVariables() {
 		var root = document.documentElement;
 		this.cssVars.forEach(function (v) { root.style.removeProperty(v); });
+		this.removeLoginCarousel();
+		this.removeFooter();
 	}
 
 	setCSSVariables() {
@@ -440,40 +461,229 @@ class BigtechDeskTheme {
 
 		var set = function (prop, val) { if (val) root.style.setProperty(prop, val); };
 
+		// Navbar
 		set("--bt-navbar-bg", t.navbar_bg_color);
 		set("--bt-navbar-color", t.navbar_text_color);
+
+		// Body
 		set("--bt-body-bg", t.body_bg_color);
 		set("--bt-card-bg", t.card_bg_color);
 		set("--bt-text-color", t.text_color);
 		set("--bt-heading-color", t.heading_color);
 		set("--bt-primary", t.primary_color);
+
+		// Sidebar
 		set("--bt-sidebar-bg", t.sidebar_bg_color);
 		set("--bt-sidebar-color", t.sidebar_text_color);
 		set("--bt-sidebar-active-bg", t.sidebar_active_bg_color);
 		set("--bt-sidebar-active-color", t.sidebar_active_text_color);
+
+		// Buttons - Primary
 		set("--bt-btn-primary-bg", t.btn_primary_bg_color);
 		set("--bt-btn-primary-color", t.btn_primary_text_color);
+		set("--bt-btn-primary-border", t.btn_primary_border_color);
 		set("--bt-btn-primary-hover-bg", t.btn_primary_hover_bg_color);
 		set("--bt-btn-primary-hover-color", t.btn_primary_hover_text_color);
+
+		// Buttons - Secondary
 		set("--bt-btn-secondary-bg", t.btn_secondary_bg_color);
 		set("--bt-btn-secondary-color", t.btn_secondary_text_color);
+		set("--bt-btn-secondary-border", t.btn_secondary_border_color);
 		set("--bt-btn-secondary-hover-bg", t.btn_secondary_hover_bg_color);
 		set("--bt-btn-secondary-hover-color", t.btn_secondary_hover_text_color);
+
+		// Tables
 		set("--bt-table-head-bg", t.table_head_bg_color);
 		set("--bt-table-head-color", t.table_head_text_color);
 		set("--bt-table-body-bg", t.table_body_bg_color);
 		set("--bt-table-body-color", t.table_body_text_color);
+
+		// Widgets
 		set("--bt-widget-bg", t.widget_bg_color);
 		set("--bt-widget-color", t.widget_text_color);
 		set("--bt-number-card-bg", t.number_card_bg_color);
 		set("--bt-number-card-border", t.number_card_border_color);
 		set("--bt-number-card-color", t.number_card_text_color);
+
+		// Inputs
 		set("--bt-input-bg", t.input_bg_color);
 		set("--bt-input-border", t.input_border_color);
 		set("--bt-input-color", t.input_text_color);
 		set("--bt-input-label-color", t.input_label_color);
+
+		// Toggles
 		root.style.setProperty("--bt-hide-help", t.hide_help_button ? "none" : "block");
 		root.style.setProperty("--bt-hide-app-switcher", t.hide_app_switcher ? "none" : "flex");
+		root.style.setProperty("--bt-hide-like-comment", t.table_hide_like_comment_section ? "none" : "block");
+	}
+
+	// ── Login Page ─────────────────────────────────────────────
+
+	applyLoginPage() {
+		var t = this.themeData;
+		if (!t || !document.body.classList.contains("login-page")) return;
+
+		var root = document.documentElement;
+		var set = function (prop, val) { if (val) root.style.setProperty(prop, val); };
+
+		// Button colors
+		set("--bt-login-btn-bg", t.login_button_background_color);
+		set("--bt-login-btn-color", t.login_button_text_color);
+		set("--bt-login-btn-hover-bg", t.login_page_button_hover_background_color);
+		set("--bt-login-btn-hover-color", t.login_page_button_hover_text_color);
+
+		// Background
+		if (t.page_background_type === "Color" && t.login_page_background_color) {
+			root.style.setProperty("--bt-login-bg-color", t.login_page_background_color);
+		} else if (t.page_background_type === "Image" && t.login_page_background_image) {
+			root.style.setProperty("--bt-login-bg-image", 'url("' + t.login_page_background_image + '")');
+		} else if (t.page_background_type === "Carousel") {
+			this.renderLoginCarousel();
+		}
+
+		// Box
+		set("--bt-login-box-bg", t.login_box_background_color);
+		set("--bt-heading-color", t.page_heading_text_color);
+
+		if (t.login_box_position && t.login_box_position !== "Default") {
+			root.style.setProperty("--bt-login-box-position", "absolute");
+			root.style.setProperty("--bt-login-box-top", "26%");
+			if (t.login_box_position === "Left") {
+				root.style.setProperty("--bt-login-box-left", "10%");
+				root.style.setProperty("--bt-login-box-right", "auto");
+			} else {
+				root.style.setProperty("--bt-login-box-right", "10%");
+				root.style.setProperty("--bt-login-box-left", "auto");
+			}
+		}
+
+		if (t.is_app_details_inside_the_box) {
+			root.style.setProperty("--bt-login-box-top", "26%");
+			root.style.setProperty("--bt-login-box-border-radius", "10px");
+			root.style.setProperty("--bt-login-box-padding", "18px 40px 40px 40px");
+		}
+
+		// Title
+		if (t.login_page_title) {
+			root.style.setProperty("--bt-login-title-display", "none");
+			root.style.setProperty("--bt-login-title-content", "'" + t.login_page_title + "'");
+			set("--bt-login-title-color", t.page_heading_text_color);
+		}
+
+		this.showLoginBox();
+	}
+
+	showLoginBox() {
+		var loginBox = document.querySelector(".for-login");
+		if (loginBox) {
+			setTimeout(function () { loginBox.classList.add("theme-ready"); }, 50);
+		}
+	}
+
+	renderLoginCarousel() {
+		var loginPage = document.querySelector("#page-login");
+		if (!loginPage) return;
+		var t = this.themeData;
+		var images = t.carousel_images;
+		if (!images || images.length === 0) return;
+
+		var root = document.documentElement;
+		var self = this;
+
+		if (this.carouselIndex >= images.length) this.carouselIndex = 0;
+		root.style.setProperty("--bt-carousel-bg-image", 'url("' + images[this.carouselIndex].image + '")');
+
+		if (this.carouselTimer) clearTimeout(this.carouselTimer);
+		if (t.allow_manual_navigation) {
+			this.ensureCarouselButtons(loginPage, images);
+		}
+		this.carouselTimer = setTimeout(function () {
+			self.carouselTimer = null;
+			self.carouselIndex = (self.carouselIndex + 1) % images.length;
+			self.renderLoginCarousel();
+		}, 5000);
+	}
+
+	ensureCarouselButtons(container, images) {
+		var self = this;
+		if (document.getElementById("bt-carousel-left")) return;
+
+		var left = document.createElement("button");
+		left.id = "bt-carousel-left";
+		left.className = "carousel-nav carousel-nav-left";
+		left.innerHTML = "&#8592;";
+		left.addEventListener("click", function (e) {
+			e.preventDefault();
+			self.carouselIndex = (self.carouselIndex - 1 + images.length) % images.length;
+			if (self.carouselTimer) { clearTimeout(self.carouselTimer); self.carouselTimer = null; }
+			self.renderLoginCarousel();
+		});
+
+		var right = document.createElement("button");
+		right.id = "bt-carousel-right";
+		right.className = "carousel-nav carousel-nav-right";
+		right.innerHTML = "&#8594;";
+		right.addEventListener("click", function (e) {
+			e.preventDefault();
+			self.carouselIndex = (self.carouselIndex + 1) % images.length;
+			if (self.carouselTimer) { clearTimeout(self.carouselTimer); self.carouselTimer = null; }
+			self.renderLoginCarousel();
+		});
+
+		container.appendChild(left);
+		container.appendChild(right);
+	}
+
+	removeLoginCarousel() {
+		var left = document.getElementById("bt-carousel-left");
+		var right = document.getElementById("bt-carousel-right");
+		if (left) left.remove();
+		if (right) right.remove();
+		if (this.carouselTimer) { clearTimeout(this.carouselTimer); this.carouselTimer = null; }
+		document.documentElement.style.removeProperty("--bt-carousel-bg-image");
+		document.documentElement.style.removeProperty("--bt-carousel-fade-opacity");
+		this.carouselIndex = 0;
+	}
+
+	// ── Footer ─────────────────────────────────────────────────
+
+	applyFooter() {
+		var t = this.themeData;
+		if (!t || document.body.classList.contains("login-page")) return;
+		if (!t.copyright_text && !t.footer_powered_by) return;
+
+		var footer = document.querySelector("#desk-footer");
+		if (!footer) {
+			var tempDiv = document.createElement("div");
+			tempDiv.innerHTML = '<div id="desk-footer"><div class="desk-footer-left"></div><div class="desk-footer-right"></div></div>';
+			footer = tempDiv.querySelector("#desk-footer");
+			var mainSection = document.querySelector(".main-section");
+			if (mainSection) {
+				mainSection.appendChild(footer);
+			} else {
+				document.body.appendChild(footer);
+			}
+		}
+
+		var left = footer.querySelector(".desk-footer-left");
+		var right = footer.querySelector(".desk-footer-right");
+		if (left && t.copyright_text) left.innerHTML = t.copyright_text;
+		if (right && t.footer_powered_by) right.innerHTML = t.footer_powered_by;
+
+		var root = document.documentElement;
+		var set = function (prop, val) { if (val) root.style.setProperty(prop, val); };
+		set("--bt-footer-bg", t.footer_background_color);
+		set("--bt-footer-color", t.footer_text_color);
+		set("--bt-footer-border", t.footer_border_color);
+
+		if (t.sticky_footer) {
+			footer.classList.add("sticky");
+		}
+	}
+
+	removeFooter() {
+		var footer = document.querySelector("#desk-footer");
+		if (footer) footer.remove();
 	}
 }
 

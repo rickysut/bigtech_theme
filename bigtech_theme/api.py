@@ -117,14 +117,23 @@ def trigger_sidebar_menu_refresh(doc=None, method=None):
 def get_bigtech_theme():
 	"""Return Bigtech Theme singleton as dict for frontend CSS variable injection."""
 	doc = frappe.get_single("Bigtech Theme")
-	return doc.as_dict()
+	data = doc.as_dict()
+	# Include carousel images explicitly (as_dict() skips child tables)
+	data.carousel_images = [
+		{"image": row.image} for row in doc.get("carousel_images", [])
+	]
+	return data
 
 
 def extend_bootinfo(bootinfo):
 	"""Inject Bigtech Theme data into boot so CSS vars apply instantly (no async flash)."""
 	try:
 		doc = frappe.get_single("Bigtech Theme")
-		bootinfo.bigtech_theme = doc.as_dict()
+		data = doc.as_dict()
+		data.carousel_images = [
+			{"image": row.image} for row in doc.get("carousel_images", [])
+		]
+		bootinfo.bigtech_theme = data
 	except Exception:
 		bootinfo.bigtech_theme = {}
 
