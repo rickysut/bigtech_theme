@@ -346,6 +346,8 @@ class BigtechDeskTheme {
 			"--bt-login-bg-color", "--bt-login-bg-image",
 			"--bt-login-box-bg", "--bt-login-box-position", "--bt-login-box-top",
 			"--bt-login-box-border-radius", "--bt-login-box-padding",
+			"--bt-login-box-left", "--bt-login-box-right", "--bt-login-box-bg-override",
+			"--bt-login-box-width",
 			"--bt-login-title-display", "--bt-login-title-content", "--bt-login-title-color",
 			"--bt-carousel-fade-opacity", "--bt-carousel-bg-image",
 			"--bt-footer-bg", "--bt-footer-color", "--bt-footer-border",
@@ -442,6 +444,7 @@ class BigtechDeskTheme {
 			this.clearCSSVariables();
 			return;
 		}
+		this.clearCSSVariables();
 		this.setCSSVariables();
 		this.applyLoginPage();
 		this.applyFooter();
@@ -450,6 +453,14 @@ class BigtechDeskTheme {
 	clearCSSVariables() {
 		var root = document.documentElement;
 		this.cssVars.forEach(function (v) { root.style.removeProperty(v); });
+		// Clear inline styles on login card
+		var pageCard = document.querySelector(".login-content.page-card");
+		if (pageCard) {
+			pageCard.style.removeProperty("width");
+			pageCard.style.removeProperty("padding");
+			pageCard.style.removeProperty("margin");
+			pageCard.style.removeProperty("box-sizing");
+		}
 		this.removeLoginCarousel();
 		this.removeFooter();
 	}
@@ -521,7 +532,8 @@ class BigtechDeskTheme {
 
 	applyLoginPage() {
 		var t = this.themeData;
-		if (!t || !document.body.classList.contains("login-page")) return;
+		var isLoginPage = document.querySelector("#page-login");
+		if (!t || !isLoginPage) return;
 
 		var root = document.documentElement;
 		var set = function (prop, val) { if (val) root.style.setProperty(prop, val); };
@@ -541,13 +553,20 @@ class BigtechDeskTheme {
 			this.renderLoginCarousel();
 		}
 
-		// Box
+		// Box background
 		set("--bt-login-box-bg", t.login_box_background_color);
-		set("--bt-heading-color", t.page_heading_text_color);
 
+		// Heading color
+		if (t.page_heading_text_color) {
+			root.style.setProperty("--bt-heading-color", t.page_heading_text_color);
+		}
+
+		// Login box position
 		if (t.login_box_position && t.login_box_position !== "Default") {
 			root.style.setProperty("--bt-login-box-position", "absolute");
 			root.style.setProperty("--bt-login-box-top", "26%");
+			root.style.setProperty("--bt-login-box-padding",
+				t.is_app_details_inside_the_box ? "18px 40px 40px 40px" : "45px 10px");
 			if (t.login_box_position === "Left") {
 				root.style.setProperty("--bt-login-box-left", "10%");
 				root.style.setProperty("--bt-login-box-right", "auto");
@@ -555,19 +574,34 @@ class BigtechDeskTheme {
 				root.style.setProperty("--bt-login-box-right", "10%");
 				root.style.setProperty("--bt-login-box-left", "auto");
 			}
+			// Directly set card width/padding/margin to override Frappe login bundle
+			var pageCard = document.querySelector(".login-content.page-card");
+			if (pageCard) {
+				pageCard.style.setProperty("width", "400px", "important");
+				pageCard.style.setProperty("padding", "45px 10px", "important");
+				pageCard.style.setProperty("margin", "0", "important");
+				pageCard.style.setProperty("box-sizing", "border-box", "important");
+			}
 		}
 
+		// App details inside the box — bg override + border-radius on .for-login
 		if (t.is_app_details_inside_the_box) {
 			root.style.setProperty("--bt-login-box-top", "26%");
 			root.style.setProperty("--bt-login-box-border-radius", "10px");
 			root.style.setProperty("--bt-login-box-padding", "18px 40px 40px 40px");
+			if (t.login_box_background_color) {
+				root.style.setProperty("--bt-login-box-bg-override", t.login_box_background_color);
+			}
 		}
 
-		// Title
+		// Custom login page title
 		if (t.login_page_title) {
 			root.style.setProperty("--bt-login-title-display", "none");
-			root.style.setProperty("--bt-login-title-content", "'" + t.login_page_title + "'");
-			set("--bt-login-title-color", t.page_heading_text_color);
+			root.style.setProperty("--bt-login-title-after-display", "flex");
+			root.style.setProperty("--bt-login-title-after-justify", "center");
+			root.style.setProperty("--bt-login-title-after-margin", "10px");
+			root.style.setProperty("--bt-login-title-after-content", "'" + t.login_page_title + "'");
+			set("--bt-login-title-after-color", t.page_heading_text_color);
 		}
 
 		this.showLoginBox();
@@ -649,7 +683,7 @@ class BigtechDeskTheme {
 
 	applyFooter() {
 		var t = this.themeData;
-		if (!t || document.body.classList.contains("login-page")) return;
+		if (!t || document.querySelector("#page-login")) return;
 		if (!t.copyright_text && !t.footer_powered_by) return;
 
 		var footer = document.querySelector("#desk-footer");
@@ -697,7 +731,14 @@ if (document.readyState === "loading") {
 
 // ============================================================
 // Sidebar init (uses jQuery — must come AFTER BigtechDeskTheme)
+// Safe on login page: jQuery may not be loaded
 // ============================================================
-$(document).ready(function () {
-	bigtech_theme.init();
-});
+if (typeof $ !== "undefined") {
+	$(document).ready(function () {
+		bigtech_theme.init();
+	});
+} else {
+	document.addEventListener("DOMContentLoaded", function () {
+		if (typeof $ !== "undefined") bigtech_theme.init();
+	});
+}

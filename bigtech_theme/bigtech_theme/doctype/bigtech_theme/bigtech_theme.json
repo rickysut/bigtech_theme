@@ -1,6 +1,6 @@
 {
  "actions": [],
- "creation": "2026-08-24 10:00:00.000000",
+ "creation": "2026-08-24 10:00:00",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
@@ -23,7 +23,6 @@
   "login_box_background_color",
   "column_break_login_3",
   "is_app_details_inside_the_box",
-  "login_page_title",
   "page_heading_text_color",
   "navbar_tab",
   "navbar_section",
@@ -31,9 +30,7 @@
   "navbar_text_color",
   "column_break_nav",
   "hide_help_button",
-  "hide_app_switcher",
   "default_app",
-  "hide_search",
   "buttons_tab",
   "primary_button_section",
   "btn_primary_bg_color",
@@ -173,6 +170,7 @@
    "options": "Bigtech Theme Carousel Image"
   },
   {
+   "default": "0",
    "depends_on": "eval:doc.page_background_type == \"Carousel\"",
    "fieldname": "allow_manual_navigation",
    "fieldtype": "Check",
@@ -204,13 +202,6 @@
    "fieldname": "is_app_details_inside_the_box",
    "fieldtype": "Check",
    "label": "Is App Logo Inside The Box"
-  },
-  {
-   "description": "Warning: This field accepts 30 characters only",
-   "fieldname": "login_page_title",
-   "fieldtype": "Data",
-   "label": "Login Page Title",
-   "length": 30
   },
   {
    "fieldname": "page_heading_text_color",
@@ -248,25 +239,12 @@
    "label": "Hide Help Button"
   },
   {
-   "default": "0",
-   "fieldname": "hide_app_switcher",
-   "fieldtype": "Check",
-   "label": "Hide App Switcher"
-  },
-  {
    "depends_on": "eval:doc.hide_app_switcher == 1",
    "description": "Select default app when app switcher is hidden.",
    "fieldname": "default_app",
    "fieldtype": "Select",
    "label": "Default App",
    "mandatory_depends_on": "eval:doc.hide_app_switcher == 1"
-  },
-  {
-   "description": "Hide search box for user roles",
-   "fieldname": "hide_search",
-   "fieldtype": "Table MultiSelect",
-   "label": "Hide Search",
-   "options": "Has Role"
   },
   {
    "fieldname": "buttons_tab",
@@ -601,7 +579,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2026-08-24 16:00:00.000000",
+ "modified": "2026-08-24 19:53:07.286036",
  "modified_by": "Administrator",
  "module": "Bigtech Theme",
  "name": "Bigtech Theme",
@@ -621,6 +599,5 @@
  "row_format": "Dynamic",
  "sort_field": "creation",
  "sort_order": "DESC",
- "states": [],
- "track_changes": 0
+ "states": []
 }

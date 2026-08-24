@@ -30,8 +30,8 @@ app_include_css = "/assets/bigtech_theme/css/bigtech_theme.css?v={}".format(time
 app_include_js = "/assets/bigtech_theme/js/bigtech_theme.js?v={}".format(time.time())
 
 # include js, css files in header of web template
-# web_include_css = "/assets/bigtech_theme/css/bigtech_theme.css"
-# web_include_js = "/assets/bigtech_theme/js/bigtech_theme.js"
+web_include_css = "/assets/bigtech_theme/css/bigtech_theme.css?v={}".format(time.time())
+web_include_js = "/assets/bigtech_theme/js/bigtech_theme.js?v={}".format(time.time())
 
 # include custom scss in every website theme (without file extension ".scss")
 # website_theme_scss = "bigtech_theme/public/scss/website"
