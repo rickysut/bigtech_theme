@@ -23,10 +23,11 @@ app_license = "mit"
 
 # Includes in <head>
 # ------------------
+import time
 
 # include js, css files in header of desk.html
-app_include_css = "/assets/bigtech_theme/css/bigtech_theme.css?v=15"
-app_include_js = "/assets/bigtech_theme/js/bigtech_theme.js?v=9"
+app_include_css = "/assets/bigtech_theme/css/bigtech_theme.css?v={}".format(time.time())
+app_include_js = "/assets/bigtech_theme/js/bigtech_theme.js?v={}".format(time.time())
 
 # include js, css files in header of web template
 # web_include_css = "/assets/bigtech_theme/css/bigtech_theme.css"
@@ -143,6 +144,10 @@ doc_events = {
 		"on_trash": "bigtech_theme.api.trigger_sidebar_menu_refresh",
 	}
 }
+
+# Boot
+# ----
+extend_bootinfo = "bigtech_theme.api.extend_bootinfo"
 
 # Scheduled Tasks
 # ---------------

@@ -1,4 +1,4 @@
-### Keytech Theme
+### Bigtech Theme
 
 Theme v15
 

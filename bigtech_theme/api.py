@@ -113,6 +113,22 @@ def trigger_sidebar_menu_refresh(doc=None, method=None):
 	)
 
 
+@frappe.whitelist(allow_guest=True)
+def get_bigtech_theme():
+	"""Return Bigtech Theme singleton as dict for frontend CSS variable injection."""
+	doc = frappe.get_single("Bigtech Theme")
+	return doc.as_dict()
+
+
+def extend_bootinfo(bootinfo):
+	"""Inject Bigtech Theme data into boot so CSS vars apply instantly (no async flash)."""
+	try:
+		doc = frappe.get_single("Bigtech Theme")
+		bootinfo.bigtech_theme = doc.as_dict()
+	except Exception:
+		bootinfo.bigtech_theme = {}
+
+
 def setup_test_data():
 	"""Create test sidebar menu items for development."""
 	items = [

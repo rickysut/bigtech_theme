@@ -310,6 +310,184 @@ bigtech_theme = {
 	},
 };
 
+// ============================================================
+// BigtechDeskTheme - Desk color theming engine
+// Pattern: mirrors frappe_desk_theme.js (no jQuery dependency)
+// ============================================================
+
+class BigtechDeskTheme {
+	constructor() {
+		this.themeData = null;
+		this.cacheKey = "bigtech_desk_theme_cache";
+		this.cacheTTL = 30 * 24 * 60 * 60 * 1000;
+		this.cssVars = [
+			"--bt-navbar-bg", "--bt-navbar-color",
+			"--bt-body-bg", "--bt-card-bg", "--bt-text-color",
+			"--bt-heading-color", "--bt-primary",
+			"--bt-sidebar-bg", "--bt-sidebar-color",
+			"--bt-sidebar-active-bg", "--bt-sidebar-active-color",
+			"--bt-btn-primary-bg", "--bt-btn-primary-color",
+			"--bt-btn-primary-hover-bg", "--bt-btn-primary-hover-color",
+			"--bt-btn-secondary-bg", "--bt-btn-secondary-color",
+			"--bt-btn-secondary-hover-bg", "--bt-btn-secondary-hover-color",
+			"--bt-table-head-bg", "--bt-table-head-color",
+			"--bt-table-body-bg", "--bt-table-body-color",
+			"--bt-widget-bg", "--bt-widget-color",
+			"--bt-number-card-bg", "--bt-number-card-border", "--bt-number-card-color",
+			"--bt-input-bg", "--bt-input-border", "--bt-input-color", "--bt-input-label-color",
+			"--bt-hide-help", "--bt-hide-app-switcher",
+		];
+		this.init();
+	}
+
+	async init() {
+		try {
+			this.applyCachedTheme();
+			await this.loadThemeIfNeeded();
+			if (this.themeData) {
+				this.applyTheme();
+			}
+			this.setupEventListeners();
+		} catch (e) {
+			this.applyTheme();
+		}
+	}
+
+	applyCachedTheme() {
+		var cached = this.getCachedTheme();
+		if (cached && cached.data) {
+			this.themeData = cached.data;
+			this.applyTheme();
+		}
+	}
+
+	getCachedTheme() {
+		try {
+			var cached = localStorage.getItem(this.cacheKey);
+			return cached ? JSON.parse(cached) : null;
+		} catch (e) { return null; }
+	}
+
+	setCachedTheme(data) {
+		try {
+			localStorage.setItem(this.cacheKey, JSON.stringify({ data: data, ts: Date.now() }));
+		} catch (e) {}
+	}
+
+	isCacheValid() {
+		var cached = this.getCachedTheme();
+		if (!cached) return false;
+		return (Date.now() - (cached.ts || 0)) < this.cacheTTL;
+	}
+
+	async loadThemeIfNeeded() {
+		if (this.isCacheValid()) return;
+		await this.loadTheme();
+	}
+
+	async loadTheme() {
+		try {
+			var r = await frappe.xcall("bigtech_theme.api.get_bigtech_theme");
+			if (r) {
+				this.themeData = r;
+				this.setCachedTheme(r);
+			}
+		} catch (e) {
+			var cached = this.getCachedTheme();
+			if (cached && cached.data) {
+				this.themeData = cached.data;
+			}
+		}
+	}
+
+	async refreshTheme() {
+		try {
+			this.clearCache();
+			await this.loadTheme();
+			this.applyTheme();
+		} catch (e) {}
+	}
+
+	clearCache() {
+		try { localStorage.removeItem(this.cacheKey); } catch (e) {}
+		this.themeData = null;
+	}
+
+	setupEventListeners() {
+		var self = this;
+		var mo = new MutationObserver(function () { self.applyTheme(); });
+		mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme-mode"] });
+	}
+
+	applyTheme() {
+		var mode = document.documentElement.getAttribute("data-theme-mode");
+		if (mode === "dark") {
+			this.clearCSSVariables();
+			return;
+		}
+		this.setCSSVariables();
+	}
+
+	clearCSSVariables() {
+		var root = document.documentElement;
+		this.cssVars.forEach(function (v) { root.style.removeProperty(v); });
+	}
+
+	setCSSVariables() {
+		var root = document.documentElement;
+		var t = this.themeData;
+		if (!t) return;
+
+		var set = function (prop, val) { if (val) root.style.setProperty(prop, val); };
+
+		set("--bt-navbar-bg", t.navbar_bg_color);
+		set("--bt-navbar-color", t.navbar_text_color);
+		set("--bt-body-bg", t.body_bg_color);
+		set("--bt-card-bg", t.card_bg_color);
+		set("--bt-text-color", t.text_color);
+		set("--bt-heading-color", t.heading_color);
+		set("--bt-primary", t.primary_color);
+		set("--bt-sidebar-bg", t.sidebar_bg_color);
+		set("--bt-sidebar-color", t.sidebar_text_color);
+		set("--bt-sidebar-active-bg", t.sidebar_active_bg_color);
+		set("--bt-sidebar-active-color", t.sidebar_active_text_color);
+		set("--bt-btn-primary-bg", t.btn_primary_bg_color);
+		set("--bt-btn-primary-color", t.btn_primary_text_color);
+		set("--bt-btn-primary-hover-bg", t.btn_primary_hover_bg_color);
+		set("--bt-btn-primary-hover-color", t.btn_primary_hover_text_color);
+		set("--bt-btn-secondary-bg", t.btn_secondary_bg_color);
+		set("--bt-btn-secondary-color", t.btn_secondary_text_color);
+		set("--bt-btn-secondary-hover-bg", t.btn_secondary_hover_bg_color);
+		set("--bt-btn-secondary-hover-color", t.btn_secondary_hover_text_color);
+		set("--bt-table-head-bg", t.table_head_bg_color);
+		set("--bt-table-head-color", t.table_head_text_color);
+		set("--bt-table-body-bg", t.table_body_bg_color);
+		set("--bt-table-body-color", t.table_body_text_color);
+		set("--bt-widget-bg", t.widget_bg_color);
+		set("--bt-widget-color", t.widget_text_color);
+		set("--bt-number-card-bg", t.number_card_bg_color);
+		set("--bt-number-card-border", t.number_card_border_color);
+		set("--bt-number-card-color", t.number_card_text_color);
+		set("--bt-input-bg", t.input_bg_color);
+		set("--bt-input-border", t.input_border_color);
+		set("--bt-input-color", t.input_text_color);
+		set("--bt-input-label-color", t.input_label_color);
+		root.style.setProperty("--bt-hide-help", t.hide_help_button ? "none" : "block");
+		root.style.setProperty("--bt-hide-app-switcher", t.hide_app_switcher ? "none" : "flex");
+	}
+}
+
+if (document.readyState === "loading") {
+	document.addEventListener("DOMContentLoaded", function () {
+		window.BigtechDeskTheme = new BigtechDeskTheme();
+	});
+} else {
+	window.BigtechDeskTheme = new BigtechDeskTheme();
+}
+
+// ============================================================
+// Sidebar init (uses jQuery — must come AFTER BigtechDeskTheme)
+// ============================================================
 $(document).ready(function () {
 	bigtech_theme.init();
 });

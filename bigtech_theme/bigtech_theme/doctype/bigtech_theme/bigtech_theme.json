@@ -1,0 +1,378 @@
+{
+ "actions": [],
+ "creation": "2026-08-24 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "navbar_tab",
+  "navbar_section",
+  "navbar_bg_color",
+  "navbar_text_color",
+  "column_break_nav",
+  "hide_help_button",
+  "hide_app_switcher",
+  "body_tab",
+  "body_section",
+  "body_bg_color",
+  "card_bg_color",
+  "column_break_body",
+  "text_color",
+  "heading_color",
+  "primary_color_section",
+  "primary_color",
+  "sidebar_tab",
+  "sidebar_section",
+  "sidebar_bg_color",
+  "sidebar_text_color",
+  "column_break_sb",
+  "sidebar_active_bg_color",
+  "sidebar_active_text_color",
+  "buttons_tab",
+  "primary_button_section",
+  "btn_primary_bg_color",
+  "btn_primary_text_color",
+  "column_break_bp",
+  "btn_primary_hover_bg_color",
+  "btn_primary_hover_text_color",
+  "secondary_button_section",
+  "btn_secondary_bg_color",
+  "btn_secondary_text_color",
+  "column_break_bs",
+  "btn_secondary_hover_bg_color",
+  "btn_secondary_hover_text_color",
+  "tables_tab",
+  "table_section",
+  "table_head_bg_color",
+  "table_head_text_color",
+  "column_break_th",
+  "table_body_bg_color",
+  "table_body_text_color",
+  "widgets_tab",
+  "widget_section",
+  "widget_bg_color",
+  "widget_text_color",
+  "column_break_wg",
+  "number_card_bg_color",
+  "number_card_border_color",
+  "number_card_text_color",
+  "inputs_tab",
+  "input_section",
+  "input_bg_color",
+  "input_border_color",
+  "column_break_inp",
+  "input_text_color",
+  "input_label_color"
+ ],
+ "fields": [
+  {
+   "fieldname": "navbar_tab",
+   "fieldtype": "Tab Break",
+   "label": "Navbar"
+  },
+  {
+   "fieldname": "navbar_section",
+   "fieldtype": "Section Break",
+   "label": "Navbar Colors"
+  },
+  {
+   "fieldname": "navbar_bg_color",
+   "fieldtype": "Color",
+   "label": "Background Color"
+  },
+  {
+   "fieldname": "navbar_text_color",
+   "fieldtype": "Color",
+   "label": "Text Color"
+  },
+  {
+   "fieldname": "column_break_nav",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "hide_help_button",
+   "fieldtype": "Check",
+   "label": "Hide Help Button"
+  },
+  {
+   "default": "0",
+   "fieldname": "hide_app_switcher",
+   "fieldtype": "Check",
+   "label": "Hide App Switcher"
+  },
+  {
+   "fieldname": "body_tab",
+   "fieldtype": "Tab Break",
+   "label": "Body"
+  },
+  {
+   "fieldname": "body_section",
+   "fieldtype": "Section Break",
+   "label": "Body Colors"
+  },
+  {
+   "fieldname": "body_bg_color",
+   "fieldtype": "Color",
+   "label": "Background Color"
+  },
+  {
+   "fieldname": "card_bg_color",
+   "fieldtype": "Color",
+   "label": "Card Background Color"
+  },
+  {
+   "fieldname": "column_break_body",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "text_color",
+   "fieldtype": "Color",
+   "label": "Text Color"
+  },
+  {
+   "fieldname": "heading_color",
+   "fieldtype": "Color",
+   "label": "Heading Color"
+  },
+  {
+   "fieldname": "primary_color_section",
+   "fieldtype": "Section Break",
+   "label": "Accent"
+  },
+  {
+   "fieldname": "primary_color",
+   "fieldtype": "Color",
+   "label": "Primary / Accent Color"
+  },
+  {
+   "fieldname": "sidebar_tab",
+   "fieldtype": "Tab Break",
+   "label": "Sidebar"
+  },
+  {
+   "fieldname": "sidebar_section",
+   "fieldtype": "Section Break",
+   "label": "Sidebar Colors"
+  },
+  {
+   "fieldname": "sidebar_bg_color",
+   "fieldtype": "Color",
+   "label": "Background Color"
+  },
+  {
+   "fieldname": "sidebar_text_color",
+   "fieldtype": "Color",
+   "label": "Text Color"
+  },
+  {
+   "fieldname": "column_break_sb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sidebar_active_bg_color",
+   "fieldtype": "Color",
+   "label": "Active Item Background"
+  },
+  {
+   "fieldname": "sidebar_active_text_color",
+   "fieldtype": "Color",
+   "label": "Active Item Text Color"
+  },
+  {
+   "fieldname": "buttons_tab",
+   "fieldtype": "Tab Break",
+   "label": "Buttons"
+  },
+  {
+   "fieldname": "primary_button_section",
+   "fieldtype": "Section Break",
+   "label": "Primary Button"
+  },
+  {
+   "fieldname": "btn_primary_bg_color",
+   "fieldtype": "Color",
+   "label": "Background Color"
+  },
+  {
+   "fieldname": "btn_primary_text_color",
+   "fieldtype": "Color",
+   "label": "Text Color"
+  },
+  {
+   "fieldname": "column_break_bp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "btn_primary_hover_bg_color",
+   "fieldtype": "Color",
+   "label": "Hover Background Color"
+  },
+  {
+   "fieldname": "btn_primary_hover_text_color",
+   "fieldtype": "Color",
+   "label": "Hover Text Color"
+  },
+  {
+   "fieldname": "secondary_button_section",
+   "fieldtype": "Section Break",
+   "label": "Secondary Button"
+  },
+  {
+   "fieldname": "btn_secondary_bg_color",
+   "fieldtype": "Color",
+   "label": "Background Color"
+  },
+  {
+   "fieldname": "btn_secondary_text_color",
+   "fieldtype": "Color",
+   "label": "Text Color"
+  },
+  {
+   "fieldname": "column_break_bs",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "btn_secondary_hover_bg_color",
+   "fieldtype": "Color",
+   "label": "Hover Background Color"
+  },
+  {
+   "fieldname": "btn_secondary_hover_text_color",
+   "fieldtype": "Color",
+   "label": "Hover Text Color"
+  },
+  {
+   "fieldname": "tables_tab",
+   "fieldtype": "Tab Break",
+   "label": "Tables"
+  },
+  {
+   "fieldname": "table_section",
+   "fieldtype": "Section Break",
+   "label": "Table Colors"
+  },
+  {
+   "fieldname": "table_head_bg_color",
+   "fieldtype": "Color",
+   "label": "Header Background Color"
+  },
+  {
+   "fieldname": "table_head_text_color",
+   "fieldtype": "Color",
+   "label": "Header Text Color"
+  },
+  {
+   "fieldname": "column_break_th",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "table_body_bg_color",
+   "fieldtype": "Color",
+   "label": "Body Background Color"
+  },
+  {
+   "fieldname": "table_body_text_color",
+   "fieldtype": "Color",
+   "label": "Body Text Color"
+  },
+  {
+   "fieldname": "widgets_tab",
+   "fieldtype": "Tab Break",
+   "label": "Widgets"
+  },
+  {
+   "fieldname": "widget_section",
+   "fieldtype": "Section Break",
+   "label": "Widget Colors"
+  },
+  {
+   "fieldname": "widget_bg_color",
+   "fieldtype": "Color",
+   "label": "Background Color"
+  },
+  {
+   "fieldname": "widget_text_color",
+   "fieldtype": "Color",
+   "label": "Text Color"
+  },
+  {
+   "fieldname": "column_break_wg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "number_card_bg_color",
+   "fieldtype": "Color",
+   "label": "Number Card Background"
+  },
+  {
+   "fieldname": "number_card_border_color",
+   "fieldtype": "Color",
+   "label": "Number Card Border"
+  },
+  {
+   "fieldname": "number_card_text_color",
+   "fieldtype": "Color",
+   "label": "Number Card Text"
+  },
+  {
+   "fieldname": "inputs_tab",
+   "fieldtype": "Tab Break",
+   "label": "Inputs"
+  },
+  {
+   "fieldname": "input_section",
+   "fieldtype": "Section Break",
+   "label": "Input Colors"
+  },
+  {
+   "fieldname": "input_bg_color",
+   "fieldtype": "Color",
+   "label": "Background Color"
+  },
+  {
+   "fieldname": "input_border_color",
+   "fieldtype": "Color",
+   "label": "Border Color"
+  },
+  {
+   "fieldname": "column_break_inp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "input_text_color",
+   "fieldtype": "Color",
+   "label": "Text Color"
+  },
+  {
+   "fieldname": "input_label_color",
+   "fieldtype": "Color",
+   "label": "Label Color"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-08-24 15:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Bigtech Theme",
+ "name": "Bigtech Theme",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 0
+}
