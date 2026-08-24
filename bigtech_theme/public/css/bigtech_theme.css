@@ -453,6 +453,9 @@ body { background-color: var(--bt-body-bg) !important; }
 }
 .page-card-head h4 { color: var(--bt-heading-color) !important; }
 
+/* FORM TABS */
+.nav.form-tabs .nav-item + .nav-item { border-left: 1px solid var(--border-color, #dee2e6) !important; }
+
 /* SIDEBAR - Frappe default */
 .body-sidebar { background-color: var(--bt-sidebar-bg) !important; color: var(--bt-sidebar-color) !important; }
 .standard-sidebar-item, .item-anchor, .sidebar-item-label, .sidebar-item-icon,
