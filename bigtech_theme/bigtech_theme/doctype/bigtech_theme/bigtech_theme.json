@@ -61,8 +61,9 @@
   "sidebar_bg_color",
   "sidebar_text_color",
   "column_break_sb",
-  "sidebar_active_bg_color",
-  "sidebar_active_text_color",
+   "sidebar_active_bg_color",
+   "sidebar_active_text_color",
+   "sidebar_badge_color",
   "tables_tab",
   "table_section",
   "table_head_bg_color",
@@ -400,11 +401,16 @@
    "fieldtype": "Color",
    "label": "Active Item Background"
   },
-  {
-   "fieldname": "sidebar_active_text_color",
-   "fieldtype": "Color",
-   "label": "Active Item Text Color"
-  },
+   {
+    "fieldname": "sidebar_active_text_color",
+    "fieldtype": "Color",
+    "label": "Active Item Text Color"
+   },
+   {
+    "fieldname": "sidebar_badge_color",
+    "fieldtype": "Color",
+    "label": "Badge Color"
+   },
   {
    "fieldname": "tables_tab",
    "fieldtype": "Tab Break",
